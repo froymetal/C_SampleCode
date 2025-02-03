@@ -1,0 +1,135 @@
+using System;
+using System.Collections.Generic;
+
+class DemoCode
+{
+    static List<string> tasks = new List<string>();
+
+    static void Main()
+    {
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("Task Manager Demo");
+            Console.WriteLine("1. Add New Task");
+            Console.WriteLine("2. List Current Tasks");
+            Console.WriteLine("3. Remove Task");
+            Console.WriteLine("4. Clear All Tasks");
+            Console.WriteLine("5. Exit");
+            Console.Write("Select an option wrinting the number: ");
+
+            string option = Console.ReadLine().Trim().ToLowerInvariant();
+
+            switch (option)
+            {
+                case "1":
+                    AddTask();
+                    break;
+                case "2":
+                    ListTasks();
+                    break;
+                case "3":
+                    RemoveTask();
+                    break;
+                case "4":
+                    ClearTasks();
+                    break;
+                case "5":
+                    Console.WriteLine("Bye Bye");
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid option. Press any key to continue...");
+                    Console.ReadKey();
+                    break;
+            }
+        }
+    }
+
+    static void AddTask()
+    {
+        Console.Write("Enter the new task: ");
+        string task = Console.ReadLine()?.Trim();
+
+        if (!string.IsNullOrWhiteSpace(task))
+        {
+            tasks.Add(task);
+            Console.WriteLine("Task added successfully!");
+        }
+        else
+        {
+            Console.WriteLine("Task cannot be empty.");
+        }
+
+        Console.Write("Press any key to continue...");
+        Console.ReadKey();
+    }
+
+    static void ListTasks()
+    {
+        Console.WriteLine("\nTask List:");
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("No tasks registered.");
+        }
+        else
+        {
+            for (int i = 0; i < tasks.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {tasks[i]}");
+            }
+        }
+        Console.Write("Press any key to continue...");
+        Console.ReadKey();
+    }
+
+    static void RemoveTask()
+    {
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("No tasks to remove.");
+            Console.Write("Press any key to continue...");
+            Console.ReadKey();
+            return;
+        }
+
+        Console.WriteLine("\nTask List:");
+        for (int i = 0; i < tasks.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {tasks[i]}");
+        }
+
+        Console.Write("Enter the number of the task to remove: ");
+        if (int.TryParse(Console.ReadLine(), out int index) && index > 0 && index <= tasks.Count)
+        {
+            tasks.RemoveAt(index - 1);
+            Console.WriteLine("Task removed successfully!");
+        }
+        else
+        {
+            Console.WriteLine("Invalid number.");
+        }
+
+        Console.Write("Press any key to continue...");
+        Console.ReadKey();
+    }
+
+    static void ClearTasks()
+    {
+        Console.Write("Are you sure you want to clear all tasks? (y/n): ");
+        string confirmation = Console.ReadLine().Trim().ToLower();
+
+        if (confirmation == "y")
+        {
+            tasks.Clear();
+            Console.WriteLine("All tasks have been cleared.");
+        }
+        else
+        {
+            Console.WriteLine("Operation canceled.");
+        }
+
+        Console.Write("Press any key to continue...");
+        Console.ReadKey();
+    }
+}
